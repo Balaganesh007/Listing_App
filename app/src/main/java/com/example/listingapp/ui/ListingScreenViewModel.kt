@@ -22,11 +22,13 @@ class ListingScreenViewModel(application: Application) : AndroidViewModel(applic
     val navigateToSelectedProperty: MutableLiveData<UserDataModel?>
         get() = _navigateToSelectedProperty
 
-    init {
+
+    fun refreshTheData(){
         coroutineScope.launch {
             usersRepository.refreshData()
         }
     }
+
 
     val resultList = usersRepository.userData
 

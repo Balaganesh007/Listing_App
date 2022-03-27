@@ -30,7 +30,7 @@ object ObjectUsersApi {
 
 interface UsersApi {
 
-    @GET("?results=5000")
+    @GET("?results=25")
     fun getPropertiesAsync():
             Deferred<NetworkContainer>
 }

@@ -1,5 +1,9 @@
 package com.example.listingapp.ui
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
@@ -14,18 +18,19 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.adapters.SearchViewBindingAdapter.setOnQueryTextListener
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 
 import com.example.listingapp.R
 import com.example.listingapp.adapter.UserAdapter
 import com.example.listingapp.databinding.ListingScreenFragmentBinding
+import kotlinx.android.synthetic.main.listing_screen_fragment.view.*
 
 class ListingScreenFragment : Fragment() {
 
     private lateinit var binding:ListingScreenFragmentBinding
     private lateinit var viewModel: ListingScreenViewModel
     private lateinit var adapter: UserAdapter
-    private lateinit var searchView: SearchView
 
 
     override fun onCreateView(
@@ -45,6 +50,10 @@ class ListingScreenFragment : Fragment() {
 
         binding.lifecycleOwner = this
 
+        if(checkNetwork(requireContext())){
+            viewModel.refreshTheData()
+        }
+
         val manager = GridLayoutManager(activity, 2)
         binding.usersList.layoutManager = manager
          adapter = UserAdapter(UserAdapter.OnClickListener{
@@ -59,7 +68,18 @@ class ListingScreenFragment : Fragment() {
             }
         })
 
-        //
+//        val searchView : android.widget.SearchView = binding.searchView
+//        searchView.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener {
+//            override fun onQueryTextSubmit(query: String?): Boolean {
+//
+//                return true
+//            }
+//
+//            override fun onQueryTextChange(newText: String?): Boolean {
+//                return true
+//            }
+//
+//        })
 
         viewModel.navigateToSelectedProperty.observe(viewLifecycleOwner, Observer {
             if ( null != it ) {
@@ -69,6 +89,21 @@ class ListingScreenFragment : Fragment() {
         })
 
         return binding.root
+    }
+
+    private fun checkNetwork(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        val network = connectivityManager.activeNetwork ?: return false
+
+        val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
+
+        return when {
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+            else -> false
+        }
     }
 
 }

@@ -71,4 +71,5 @@ class UserDetailViewModel(userDataModel: UserDataModel, application: Application
         } }, { error -> error.printStackTrace() })
         requestQueue?.add(request)
     }
+
 }

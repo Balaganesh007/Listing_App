@@ -10,29 +10,26 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="229dp">
+        android:layout_height="216dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="181dp"
-                android:layout_height="match_parent">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/profileImageView"
-                    android:layout_width="184dp"
-                    android:layout_height="136dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="32dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_width="144dp"
+                    android:layout_height="121dp"
+                    android:layout_marginTop="16dp"
                     app:imageUrl="@{data.userImg}"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:srcCompat="@tools:sample/backgrounds/scenic" />
@@ -44,6 +41,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:text="@{data.first}"
+                    android:textSize="10dp"
                     app:layout_constraintEnd_toStartOf="@+id/lastNameUserTextView"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintHorizontal_chainStyle="packed"
@@ -55,7 +53,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
                     android:text="@{data.last}"
+                    android:textSize="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/firstNameTextView"
