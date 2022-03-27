@@ -8,11 +8,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.adapters.SearchViewBindingAdapter.setOnQueryTextListener
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+
 import com.example.listingapp.R
 import com.example.listingapp.adapter.UserAdapter
 import com.example.listingapp.databinding.ListingScreenFragmentBinding
@@ -21,9 +24,9 @@ class ListingScreenFragment : Fragment() {
 
     private lateinit var binding:ListingScreenFragmentBinding
     private lateinit var viewModel: ListingScreenViewModel
+    private lateinit var adapter: UserAdapter
+    private lateinit var searchView: SearchView
 
-    //
-    private lateinit var userAdapter: UserAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,14 +41,13 @@ class ListingScreenFragment : Fragment() {
 
         val application = requireNotNull(this.activity).application
         val viewModelFactory = ListingScreenViewModelFactory(application)
-
         viewModel = ViewModelProvider(this,viewModelFactory).get(ListingScreenViewModel::class.java)
 
         binding.lifecycleOwner = this
 
         val manager = GridLayoutManager(activity, 2)
         binding.usersList.layoutManager = manager
-        val adapter = UserAdapter(UserAdapter.OnClickListener{
+         adapter = UserAdapter(UserAdapter.OnClickListener{
             viewModel.displayPropertyDetails(it)
         })
         binding.usersList.adapter = adapter
@@ -56,6 +58,8 @@ class ListingScreenFragment : Fragment() {
                 adapter.submitList(it)
             }
         })
+
+        //
 
         viewModel.navigateToSelectedProperty.observe(viewLifecycleOwner, Observer {
             if ( null != it ) {
