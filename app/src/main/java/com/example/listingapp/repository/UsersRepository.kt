@@ -20,9 +20,12 @@ class UsersRepository (private val database: UsersDatabase) {
 
     suspend fun refreshData() {
         withContext(Dispatchers.IO) {
-            val result = ObjectUsersApi.retrofitService.getPropertiesAsync().await()
+            val result = ObjectUsersApi.retrofitService.getPropertiesAsync().await().body()
             Log.v("bala refreshing data",result.toString())
-            database.userDataDao.insertAll(*result.asDatabaseModel())
+            if (result != null) {
+                database.userDataDao.insertAll(*result.asDatabaseModel())
+            }
         }
     }
+
 }

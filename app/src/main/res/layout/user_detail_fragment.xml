@@ -7,9 +7,16 @@
         <variable
             name="userDetailViewModel"
             type="com.example.listingapp.ui.UserDetailViewModel" />
+        <variable
+            name="weatherProperty"
+            type="com.example.listingapp.WeatherModel" />
 
     </data>
 
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,63 +27,75 @@
             android:id="@+id/userImageView"
             android:layout_width="128dp"
             android:layout_height="128dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginStart="140dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="143dp"
             app:imageUrl="@{userDetailViewModel.selectedProperty.userImg}"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/firstNameUserTextView"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:text="@{userDetailViewModel.selectedProperty.first}"
-            app:layout_constraintStart_toEndOf="@+id/userImageView"
-            app:layout_constraintTop_toTopOf="@+id/userImageView" />
+            app:layout_constraintEnd_toStartOf="@+id/lastNameUserTextView"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/userImageView"
+            tools:text="furstnameUser" />
 
         <TextView
             android:id="@+id/lastNameUserTextView"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
             android:text="@{userDetailViewModel.selectedProperty.last}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/firstNameUserTextView"
-            app:layout_constraintTop_toTopOf="@+id/userImageView" />
+            app:layout_constraintTop_toBottomOf="@+id/userImageView"
+            tools:text="furstnameUser" />
 
         <TextView
             android:id="@+id/AgeUserTextView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_height="19dp"
+            android:layout_marginTop="8dp"
             android:text="@{userDetailViewModel.selectedProperty.age}"
-            app:layout_constraintStart_toEndOf="@+id/userImageView"
-            app:layout_constraintTop_toBottomOf="@+id/firstNameUserTextView" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/firstNameUserTextView"
+            tools:text="furstnameUser" />
 
         <TextView
             android:id="@+id/EmailTextView"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:text="@{userDetailViewModel.selectedProperty.email}"
-            app:layout_constraintStart_toEndOf="@+id/userImageView"
-            app:layout_constraintTop_toBottomOf="@+id/AgeUserTextView" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/AgeUserTextView"
+            tools:text="furstnameUser" />
 
         <TextView
             android:id="@+id/phoneNoTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:text="@{userDetailViewModel.selectedProperty.phone}"
-            app:layout_constraintBottom_toBottomOf="@+id/userImageView"
-            app:layout_constraintStart_toEndOf="@+id/userImageView"
-            app:layout_constraintTop_toBottomOf="@+id/EmailTextView" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/EmailTextView"
+            tools:text="furstnameUser" />
 
         <TextView
             android:id="@+id/countryTextView"
@@ -85,92 +104,117 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="@{userDetailViewModel.selectedProperty.country}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/textView2"
-            app:layout_constraintTop_toBottomOf="@+id/phoneNoTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/phoneNoTextView"
+            tools:text="furstnameUser" />
+
+        //
+
+        <!--        android:text="@{userDetailViewModel.celsius.toString()}"-->
+
+        //
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="116dp"
-            android:layout_marginTop="16dp"
-            android:text="humidity"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/TemperaturetextView" />
-
-        <TextView
-            android:id="@+id/TemperaturetextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="90dp"
-            android:layout_marginTop="16dp"
-            android:text="Temperature"
+            android:layout_marginTop="8dp"
+            android:text="humidity"
+            app:layout_constraintEnd_toStartOf="@+id/humidityTextView"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cityTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/tempTextView"
+            tools:text="furstnameUser" />
 
         <TextView
             android:id="@+id/tempTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toEndOf="@+id/TemperaturetextView"
-            app:layout_constraintTop_toBottomOf="@+id/cityTextView" />
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3"
+            tools:text="furstnameUser" />
 
         <TextView
             android:id="@+id/humidityTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/textView"
-            app:layout_constraintTop_toBottomOf="@+id/tempTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/tempTextView"
+            tools:text="furstnameUser" />
 
         <TextView
             android:id="@+id/cityTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="9dp"
             android:text="@{userDetailViewModel.selectedProperty.city}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/textView3"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            tools:text="furstnameUser" />
+
+        //
+
+        <!--        android:text="@{userDetailViewModel.properties.wind.speed}"-->
+
+        <!--        android:text="@{userDetailViewModel.properties.weather}"-->
 
         <TextView
             android:id="@+id/textView7"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="92dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:text="Wind Speed"
+            app:layout_constraintEnd_toStartOf="@+id/windSpeedTextView"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            tools:text="furstnameUser" />
 
         <TextView
             android:id="@+id/windSpeedTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/textView7"
-            app:layout_constraintTop_toBottomOf="@+id/humidityTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            tools:text="furstnameUser" />
 
         <TextView
             android:id="@+id/weatherTextView"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginStart="229dp"
-            android:layout_marginTop="12dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+            app:layout_constraintTop_toBottomOf="@+id/textView7"
+            tools:text="furstnameUser" />
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             android:text="Weather of The User's Location  :"
+            app:layout_constraintEnd_toStartOf="@+id/countryTextView"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/phoneNoTextView" />
 
@@ -178,11 +222,15 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_marginStart="84dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:text="city :"
+            app:layout_constraintEnd_toStartOf="@+id/cityTextView"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 </layout>

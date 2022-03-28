@@ -5,71 +5,57 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.android.volley.Request
-import com.android.volley.RequestQueue
-import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.Volley
+import com.example.listingapp.WeatherModel
 import com.example.listingapp.domain.UserDataModel
-import org.json.JSONException
+import com.example.listingapp.network.ObjectUsersApi
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
-class UserDetailViewModel(userDataModel: UserDataModel, application: Application) : AndroidViewModel(application) {
+class UserDetailViewModel(userDataModel: UserDataModel,
+                          application: Application) :
+    AndroidViewModel(application) {
 
-    private var requestQueue: RequestQueue? = null
-
-    private var _temp = MutableLiveData<String>()
-    val temp : LiveData<String>
-        get() = _temp
-
-    private var _humidity = MutableLiveData<String>()
-    val humidity : LiveData<String>
-        get() = _humidity
-
-    private var _windSpeed = MutableLiveData<String>()
-    val windSpeed : LiveData<String>
-        get() = _windSpeed
-
-    private var _weatherDes = MutableLiveData<String>()
-    val weatherDes : LiveData<String>
-        get() = _weatherDes
+    private var viewModelJob = Job()
+    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main )
 
     private var _selectedProperty = MutableLiveData<UserDataModel>()
     val selectedProperty : LiveData<UserDataModel>
         get() = _selectedProperty
 
+    private var _properties = MutableLiveData<WeatherModel?>()
+    val properties: LiveData<WeatherModel?>
+        get() = _properties
+
+    private var _celsius = MutableLiveData<String>()
+    val celsius : LiveData<String>
+    get() = _celsius
+
 
     init {
         _selectedProperty.value = userDataModel
-        requestQueue = Volley.newRequestQueue(this.getApplication())
+
     }
 
-
-
-    fun getWeatherDetails(url: String) {
-        val request = JsonObjectRequest(Request.Method.GET, url, null, {
-                response ->try {
-            val jsonArray = response.getJSONArray("weather")
-            val jsonObject = response.getJSONObject("main")
-            val jsonObject2 = response.getJSONObject("wind")
-
-            val temp : String = jsonObject.getString("temp")
-            val humidity = jsonObject.getString("humidity")
-            val windSpeed = jsonObject2.getString("speed")
-
-             _temp.value = temp.toString()
-            _humidity.value = humidity.toString()
-            _windSpeed.value = windSpeed.toString()
-
-            for (i in 0 until jsonArray.length()) {
-                val weather = jsonArray.getJSONObject(i)
-                val weatherDescription = weather.getString("description")
-                val weatherDes = weatherDescription.toString()
-                _weatherDes.value = weatherDes.toString()
-
+    fun getWeatherDetails(lat: String, lon: String, apiKey: String) {
+        coroutineScope.launch {
+            Log.v("bala","getWeather called")
+            val getPropertiesDeferred = ObjectUsersApi.retrofitServiceWeather.getRandomUsersWeatherAsync(lat = lat, lon = lon, appId =apiKey)
+            try {
+                val listResult = getPropertiesDeferred.await()
+                Log.v("bala", listResult.toString())
+              _properties.value = listResult.body()
+                Log.v("bala", _properties.value.toString())
+            } catch (e: Exception) {
+                _properties.value = null
             }
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        } }, { error -> error.printStackTrace() })
-        requestQueue?.add(request)
+        }
     }
 
+    fun getCelsius(temp: Double?) {
+        val temperatureKelvin = temp?.minus(273.15)
+        val tempInInt = temperatureKelvin!!.toInt()
+        _celsius.value = "$tempInInt deg Celsius"
+    }
 }

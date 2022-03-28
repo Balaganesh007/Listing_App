@@ -62,20 +62,4 @@ class UserAdapter(private val onClickListener: OnClickListener) : ListAdapter<Us
         fun onClick(userDataModel:UserDataModel) = clickListener(userDataModel)
     }
 
-//     override fun getFilter(): Filter {
-//        return object: Filter() {
-//            override fun performFiltering(constraint: CharSequence?): FilterResults {
-//                val filterResults = FilterResults()
-//                if (constraint == null || constraint.length < 0){
-//                    filterResults.count = itemCount
-//                    filterResults.values =
-//                }
-//            }
-//
-//            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-//
-//            }
-//
-//        }
-//    }
 }
